@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Prediction Interface</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Developer Salary Predictor</h1>
+      <p>Choose your country and work style, then enter experience to predict yearly salary.</p>
+
+      <form id="predictionForm" class="form-card">
+        <label for="countrySelect">Country</label>
+        <select id="countrySelect" required>
+          <option value="">Loading countries...</option>
+        </select>
+
+        <label for="remoteWorkSelect">Remote work style</label>
+        <select id="remoteWorkSelect" required>
+          <option value="">Loading options...</option>
+        </select>
+
+        <label for="yearsInput">Years of professional experience</label>
+        <input
+          id="yearsInput"
+          type="number"
+          step="0.1"
+          min="0"
+          placeholder="e.g. 5"
+          required
+        />
+
+        <button id="predictButton" type="submit">Predict Salary</button>
+      </form>
+
+      <section id="resultCard" class="result-card hidden">
+        <h2>Predicted Salary</h2>
+        <p id="resultText"></p>
+      </section>
+
+      <section id="errorCard" class="error-card hidden">
+        <p id="errorText"></p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
