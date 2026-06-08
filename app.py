@@ -53,10 +53,26 @@ def predict_salary():
 
     try:
         predicted_value = model.predict(features)[0]
+        
+        # Calculate career trajectory
+        trajectory_years = [1, 3, 5, 10, 15]
+        trajectory_features = pd.DataFrame([
+            {
+                "Country": country,
+                "YearsCodePro": float(y),
+                "RemoteWork": remote_work,
+            } for y in trajectory_years
+        ])
+        trajectory_preds = model.predict(trajectory_features)
+        trajectory = [{"years": y, "salary": round(float(p), 2)} for y, p in zip(trajectory_years, trajectory_preds)]
+        
     except Exception as exc:
         return jsonify({"error": f"Prediction failed: {str(exc)}"}), 500
 
-    return jsonify({"predictedSalary": round(float(predicted_value), 2)})
+    return jsonify({
+        "predictedSalary": round(float(predicted_value), 2),
+        "trajectory": trajectory
+    })
 
 
 @app.route("/<path:path>")
@@ -65,4 +81,4 @@ def static_file(path: str):
 
 
 if __name__ == "__main__":
-    app.run(debug=False, port=5000)
+    app.run(debug=False, port=5001)

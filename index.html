@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Salary Analytics Dashboard</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdn.plot.ly/plotly-2.37.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   </head>
   <body>
     <main class="dashboard">
@@ -30,10 +32,29 @@
             <h2>Instant salary estimator</h2>
           </div>
 
-          <div id="resultCard" class="result-card large-result big-prediction" aria-live="polite">
+          <div id="resultCard" class="result-card large-result big-prediction hidden" aria-live="polite">
             <h3>Estimated salary</h3>
-            <p id="resultText">—</p>
+            <div class="result-display-row">
+              <p id="resultText">—</p>
+              <select id="currencySelect" class="currency-dropdown">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="INR">INR (₹)</option>
+                <option value="CAD">CAD ($)</option>
+                <option value="AUD">AUD ($)</option>
+              </select>
+            </div>
             <div class="small-note">Use the form to estimate salary based on Country, Remote work style and Years of experience.</div>
+            
+            <div id="trajectoryChart" class="trajectory-chart"></div>
+
+            <button id="downloadPdfBtn" type="button" class="btn-secondary" style="margin-top: 16px;">Download PDF Report</button>
+          </div>
+
+          <div id="errorCard" class="error-card hidden" aria-live="assertive">
+            <h3>Error</h3>
+            <p id="errorText">—</p>
           </div>
 
           <form id="predictionForm" class="prediction-form prediction-full-form">
@@ -69,7 +90,6 @@
             <div class="chart-card-header">
               <h2>Top 10 countries by average salary</h2>
             </div>
-            <img src="bar_graph.png" alt="Top 10 countries by average salary" class="chart-ref-image" />
             <div id="topCountriesChart" class="chart-panel"></div>
           </section>
             <!-- Removed salary distribution and mini top-countries cards as requested -->
